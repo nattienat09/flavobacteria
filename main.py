@@ -41,14 +41,6 @@ def calc_param(MIN_X,MAX_X,MIN_Y,MAX_Y,num,length):
     xs,ys = drawDDA(x,y,random_x,random_y)
     return xs,ys,theta,random_x,random_y
 
-def calc_param_aux(flavo,mode):
-    if mode=='yes':
-        flavo.length += 1
-    x = int(flavo.xs[-1] + flavo.length*math.cos(flavo.theta))
-    y = int(flavo.ys[-1] + flavo.length*math.sin(flavo.theta))
-    flavo.xs,flavo.ys = drawDDA(x,y,flavo.xs[-1],flavo.ys[-1])
-    return flavo
-
 def random_walk(flavo,dt,time):
     flavo = death(flavo,time)
     if flavo.alive == 'yes':
@@ -72,20 +64,23 @@ def random_walk(flavo,dt,time):
         time += 1
     return flavo,time
 
-def random_spin(xs,ys,length):
-    tzoker = (math.pi/18)*random()
-    new_x,new_y = np.zeros((len(xs))),np.zeros((len(ys)))
-    new_x[-1] = length*math.cos(tzoker)
-    new_y[-1] = length*math.sin(tzoker)
-    new_x[0] = xs[0]
-    new_y[0] = ys[0]
-    xs,ys = drawDDA(new_x[0],new_y[0],new_x[-1],new_y[-1])
-    return xs,ys
+def random_spin(flavo):
+    tzoker = (math.pi/9)*random()
+    flavo.theta += tzoker
+    new_x,new_y = np.zeros((len(flavo.xs))),np.zeros((len(flavo.ys)))
+    new_x[-1] = flavo.length*math.cos(tzoker)
+    new_y[-1] = flavo.length*math.sin(tzoker)
+    new_x[0] = flavo.xs[0]
+    new_y[0] = flavo.ys[0]
+    flavo.xs,flavo.ys = drawDDA(new_x[0],new_y[0],new_x[-1],new_y[-1])
+    return flavo
 
 def growth(flavo,mode):
-    flavo.xs.append(flavo.xs[-1]+math.cos(flavo.theta))
-    flavo.ys.append(flavo.ys[-1]+math.sin(flavo.theta))
-    return flavo
+    if mode=='yes':
+        flavo.xs.append(flavo.xs[-1] + (1/3)*math.cos(flavo.theta))
+        flavo.ys.append(flavo.ys[-1] + (1/3)*math.sin(flavo.theta))
+        return flavo
+    else: return flavo
 
 def death(flavo,time):
     if flavo.alive == 'yes':
@@ -101,7 +96,7 @@ def death(flavo,time):
 def animate(i):
     global time
     flavos[0],time = random_walk(flavos[0],dt,time)
-    #x__s,y__s = random_spin(x_s,y_s,length)
+    flavos[0] = random_spin(flavos[0])
     line.set_xdata(flavos[0].xs)
     line.set_ydata(flavos[0].ys)
     return line,
