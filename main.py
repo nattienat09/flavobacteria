@@ -58,8 +58,8 @@ def random_walk(flavo,dt,time):
         else:
             flavo = growth(flavo,'no')
         lotto = random()
-        a = (flavo.ys[-1] - flavo.ys[0]) / (flavo.xs[-1] - flavo.xs[0])
-        b = (flavo.ys[0] - a * flavo.xs[0])
+        a = (flavo.ys[-1] - flavo.ys[math.floor(len(flavo.ys)/2)]) / (flavo.xs[-1] - flavo.xs[math.floor(len(flavo.xs)/2)])
+        b = (flavo.ys[math.floor(len(flavo.ys)/2)] - a * flavo.xs[math.floor(len(flavo.xs)/2)])
         print("a= ", a, "b= ", b)
         if lotto > 0.1:  # front
             for i in range(len(flavo.xs)):
@@ -83,7 +83,8 @@ def random_spin(xs,ys,length):
     return xs,ys
 
 def growth(flavo,mode):
-    flavo = calc_param_aux(flavo,mode)
+    flavo.xs.append(flavo.xs[-1]+math.cos(flavo.theta))
+    flavo.ys.append(flavo.ys[-1]+math.sin(flavo.theta))
     return flavo
 
 def death(flavo,time):
