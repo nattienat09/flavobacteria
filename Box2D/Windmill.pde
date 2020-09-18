@@ -244,10 +244,9 @@ class Flavo {
      Vec2 vel6 = new Vec2(vel*cos(a6),vel*sin(a6));
      node6.body.setLinearVelocity(vel6);
   }
-  int j = 0;
+
   void apply_force(float point_x,float point_y){
     float coeff = 3;
-    j = j+1;
     Vec2 force1 = new Vec2(coeff*(point_x - node1.body.getWorldCenter().x),coeff*(point_y - node1.body.getWorldCenter().y));
     Vec2 force2 = new Vec2(coeff*(point_x - node2.body.getWorldCenter().x),coeff*(point_y - node2.body.getWorldCenter().y));
     Vec2 force3 = new Vec2(coeff*(point_x - node3.body.getWorldCenter().x),coeff*(point_y - node3.body.getWorldCenter().y));
@@ -255,12 +254,9 @@ class Flavo {
     Vec2 force5 = new Vec2(coeff*(point_x - node5.body.getWorldCenter().x),coeff*(point_y - node5.body.getWorldCenter().y));
     Vec2 force6 = new Vec2(coeff*(point_x - node6.body.getWorldCenter().x),coeff*(point_y - node6.body.getWorldCenter().y));
     Vec2 force7 = new Vec2(coeff*(point_x - node7.body.getWorldCenter().x),coeff*(point_y - node7.body.getWorldCenter().y));
-    print("apllying force out ", j);
     node4.body.applyForceToCenter(force4);
     node5.body.applyForceToCenter(force5);
     node6.body.applyForceToCenter(force6);
-      }
-     }
  }
   void display() {
     box2.display();
