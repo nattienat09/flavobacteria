@@ -15,10 +15,6 @@ Flavo p1;
 ArrayList<Particle> particles;
 ArrayList<Boundary> boundaries;
 ArrayList<Flavo> flavos;
-//NOTE TO NATALIA
-//i have to create one that is just standing there horizontally and one that starts at like 30 degrees and moves towards it and then collides and then boom,
-//maybe ill have to create custom forces to simulate the springs (actually i will definitely have to do that) 
-//also i have to create a circular boundary maybe?as a chain?idk
 void setup() {
   size(640,360);
   // Initialize box2d physics and create the world
